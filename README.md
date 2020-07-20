@@ -1,4 +1,4 @@
-# todo-appp
+# todo-app
 
 > A Vue.js project
 

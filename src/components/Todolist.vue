@@ -1,29 +1,23 @@
 <template>
-  <div>
+  <div
+    class="demo-infinite-container"
+    :infinite-scroll-distance="10">
+
     <h3>Completed Tasks: {{todos.filter(todo => {return todo.done === true}).length}}</h3>
     <h3>Pending Tasks: {{todos.filter(todo => {return todo.done === false}).length}}</h3>
     <br/>
-    <div>
-      <a-list :grid="{ gutter: 96, column: 4 }" :data-source="todos">
-        <a-list-item slot="renderItem" slot-scope="item, todos" v-bind:index="todos">
-            <a-card :title="item.title" >
-              <p :class="{done : item.done}">{{item.content}}</p>
-              <br/>
-            </a-card>
-            <br>
-            <a-checkbox @change="onChange" v-model="item.done"> Done </a-checkbox>
-            <a-button type="danger" v-on:click="deleteTask">Delete</a-button>
-        </a-list-item>
-      </a-list>
-    </div>
+    <todo v-on:del-todo="del" slot="renderItem" v-for="todo in todos" v-bind:key="todo.id" v-bind:index="todos" :todo.sync="todo"></todo>
+
   </div>
 </template>
 
 <script>
+import Todo from './Todo'
 export default {
   props: ['todos'],
+  components: {Todo},
   methods: {
-    deleteTask (todo) {
+    del (todo) {
       const indexOfTask = this.todos.indexOf(todo)
       this.todos.splice(indexOfTask, 1)
     }
@@ -31,8 +25,6 @@ export default {
 }
 </script>
 
-<style scoped>
-  .done{
-    text-decoration: line-through;
-  }
+<style>
+
 </style>

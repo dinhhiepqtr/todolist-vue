@@ -1,45 +1,63 @@
 <template>
-  <div class="all" align="center"  id="app">
-    <todo-list v-bind:todos="todos" ></todo-list>
+  <div id="app" align="center">
+    <todo-list v-bind:todos="todos"></todo-list>
     <br/>
-    <br/>
-    <create-todo v-on:create-todo="createTodo"></create-todo>
+    <create v-on:create-todo="createTodo"></create>
   </div>
 </template>
 
 <script>
 import TodoList from './components/TodoList'
-import CreateTodo from './components/CreateTodo'
+import Create from './components/Create'
 export default {
   name: 'App',
-  components: {
-    TodoList,
-    CreateTodo
-  },
+  components: {TodoList, Create},
   data () {
     return {
-      todos: [{
-        title: 'Init data',
-        content: 'Tạo ra cái data đầu tiên',
-        done: true
-      },
-      {
-        title: 'Card',
-        content: 'Nhét dữ liệu vào trong các thẻ',
-        done: true
-      }]
+      todos: [
+        {
+          id: 1,
+          title: 'Init data',
+          content: 'Khởi tạo data',
+          done: false,
+          isEdit: false
+        },
+        {
+          id: 2,
+          title: 'Tạo form create',
+          content: 'thêm phần add item',
+          done: true,
+          isEdit: false
+        },
+        {
+          id: 3,
+          title: 'đỗ đình hiệp',
+          content: 'blo blo',
+          done: false,
+          isEdit: false
+        },
+        {
+          id: 4,
+          title: 'Bệt bụng bự',
+          content: 'blo blo',
+          done: true,
+          isEdit: false
+        }
+      ],
+      count: 4
     }
   },
   methods: {
     createTodo (newTodo) {
+      newTodo.id = this.count + 1
+      this.count += 1
       this.todos.push(newTodo)
+      console.log(this.todos)
     }
   }
 }
 </script>
 
 <style>
-  .all{
-    padding : 3%;
-  }
+
 </style>
